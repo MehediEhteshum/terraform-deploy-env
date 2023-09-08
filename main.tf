@@ -7,8 +7,8 @@ terraform {
 }
 
 module "cloud-env" {
-  source      = "./azure-env"
-  location    = "East Us"
+  source      = var.cloud-provider == "azure" ? "./azure-env" : "./aws-env"
+  location    = var.location
   environment = var.environment
   local-os    = var.local-os
 }
