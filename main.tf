@@ -7,6 +7,8 @@ terraform {
 }
 
 module "cloud-env" {
-  source   = "./azure-env"
-  location = "East Us"
+  source      = "./azure-env"
+  location    = "East Us"
+  environment = var.environment
+  local-os    = var.local-os
 }

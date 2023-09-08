@@ -1,8 +1,3 @@
-variable "location" {
-  type        = string
-  description = "The location for the deployment: e.g. East US"
-}
-
 variable "environment" {
   type        = string
   description = "Deployment environment: [dev, prod]"

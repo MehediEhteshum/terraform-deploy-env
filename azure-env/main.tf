@@ -1,15 +1,17 @@
-resource "azurerm_resource_group" "rg" {
-  name     = "rg-env"
-  location = var.location
-  tags = {
-    environment = var.environment
-  }
-}
+# resource "azurerm_resource_group" "rg" {
+#   name     = "rg-env"
+#   location = var.location
+#   tags = {
+#     environment = var.environment
+#   }
+# }
 
 resource "azurerm_virtual_network" "vnet1" {
-  name                = "vnet1-rg"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  name = "vnet1-rg"
+  #   resource_group_name = azurerm_resource_group.rg.name
+  #   location            = azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
   address_space       = ["10.123.0.0/16"]
 
   tags = {
@@ -18,16 +20,19 @@ resource "azurerm_virtual_network" "vnet1" {
 }
 
 resource "azurerm_subnet" "snet1" {
-  name                 = "snet1-vnet1-rg"
-  resource_group_name  = azurerm_resource_group.rg.name
+  name = "snet1-vnet1-rg"
+  #   resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet1.name
   address_prefixes     = ["10.123.1.0/24"]
 }
 
 resource "azurerm_network_security_group" "nsg1" {
-  name                = "nsg1"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  name = "nsg1"
+  #   resource_group_name = azurerm_resource_group.rg.name
+  #   location            = azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
 
   tags = {
     environment = var.environment
@@ -35,16 +40,17 @@ resource "azurerm_network_security_group" "nsg1" {
 }
 
 resource "azurerm_network_security_rule" "nsrule1" {
-  name                        = "nsrule1-nsg1"
-  priority                    = 100
-  direction                   = "Inbound"
-  access                      = "Allow"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-  resource_group_name         = azurerm_resource_group.rg.name
+  name                       = "nsrule1-nsg1"
+  priority                   = 100
+  direction                  = "Inbound"
+  access                     = "Allow"
+  protocol                   = "*"
+  source_port_range          = "*"
+  destination_port_range     = "*"
+  source_address_prefix      = "*"
+  destination_address_prefix = "*"
+  #   resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name         = data.azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg1.name
 }
 
@@ -54,9 +60,11 @@ resource "azurerm_subnet_network_security_group_association" "snet1-nsg1" {
 }
 
 resource "azurerm_public_ip" "pubip1" {
-  name                = "pubip1"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  name = "pubip1"
+  #   resource_group_name = azurerm_resource_group.rg.name
+  #   location            = azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
   allocation_method   = "Dynamic"
 
   tags = {
@@ -65,31 +73,31 @@ resource "azurerm_public_ip" "pubip1" {
 }
 
 resource "azurerm_network_interface" "nic1" {
-  name                = "nic1"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  name = "nic1"
+  #   resource_group_name = azurerm_resource_group.rg.name
+  #   location            = azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
 
   ip_configuration {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.snet1.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.pubip1.id
-
-    tags = {
-      environment = var.environment
-    }
   }
 }
 
 resource "azurerm_linux_virtual_machine" "vm1" {
-  name                  = "vm1-snet1-vnet1-rg"
-  resource_group_name   = azurerm_resource_group.rg.name
-  location              = azurerm_resource_group.rg.location
+  name = "vm1-snet1-vnet1-rg"
+  #   resource_group_name = azurerm_resource_group.rg.name
+  #   location            = azurerm_resource_group.rg.location
+  resource_group_name   = data.azurerm_resource_group.rg.name
+  location              = data.azurerm_resource_group.rg.location
   size                  = "Standard_B1s"
   admin_username        = "adminuser"
   network_interface_ids = [azurerm_network_interface.nic1.id]
 
-  custom_data = filebase64("customdata.tpl")
+  custom_data = filebase64("./customdata.tpl")
 
   admin_ssh_key {
     username   = "adminuser"
