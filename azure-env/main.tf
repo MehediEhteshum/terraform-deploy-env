@@ -47,3 +47,8 @@ resource "azurerm_network_security_rule" "nsrule1" {
   resource_group_name         = azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.nsg1.name
 }
+
+resource "azurerm_subnet_network_security_group_association" "snet1-nsg1" {
+  subnet_id                 = azurerm_subnet.snet1.id
+  network_security_group_id = azurerm_network_security_group.mtc-sg.id
+}
