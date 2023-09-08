@@ -1,3 +1,5 @@
+## Comment out when a new rg needs to be created, and see & update `module > main`
+## Uncomment when an existing rg needs to be used
 data "azurerm_resource_group" "rg" {
   name = "learn-fbee058d-9c88-4ec8-a08c-cfbd305d0547"
 }

@@ -1,3 +1,5 @@
+## Uncomment when a new rg needs to be created
+## Comment out when an existing rg needs to be used, and see & update `module > datasource`
 # resource "azurerm_resource_group" "rg" {
 #   name     = "rg-env"
 #   location = var.location
