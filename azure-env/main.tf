@@ -52,3 +52,14 @@ resource "azurerm_subnet_network_security_group_association" "snet1-nsg1" {
   subnet_id                 = azurerm_subnet.snet1.id
   network_security_group_id = azurerm_network_security_group.mtc-sg.id
 }
+
+resource "azurerm_public_ip" "pubip1" {
+  name                = "pubip1"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  allocation_method   = "Dynamic"
+
+  tags = {
+    environment = var.environment
+  }
+}
