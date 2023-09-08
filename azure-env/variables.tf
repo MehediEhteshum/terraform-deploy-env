@@ -11,3 +11,12 @@ variable "environment" {
     error_message = "Valid value is one of the following: dev, prod."
   }
 }
+
+variable "local-os" {
+  type        = string
+  description = "Local OS"
+  validation {
+    condition     = contains(["windows", "linux"], var.local-os)
+    error_message = "Valid value is one of the following: windows, linux."
+  }
+}
