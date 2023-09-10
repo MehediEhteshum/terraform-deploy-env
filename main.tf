@@ -12,7 +12,7 @@ terraform {
 module "azure-env" {
   count       = var.cloud-provider == "azure" ? 1 : 0
   source      = "./azure-env"
-  location    = var.location
+  location    = var.location-azure
   environment = var.environment
   local-os    = var.local-os
 }

@@ -25,7 +25,7 @@ variable "local-os" {
   }
 }
 
-variable "location" {
+variable "location-azure" {
   type        = string
   description = "Type the location for the deployment: e.g. East US"
   # default     = "East US"
