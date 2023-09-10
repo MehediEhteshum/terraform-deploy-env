@@ -26,3 +26,22 @@ resource "aws_internet_gateway" "igw1" {
     environment = var.environment
   }
 }
+
+resource "aws_route_table" "rt1" {
+  vpc_id = aws_vpc.vpc1.id
+
+  tags = {
+    environment = var.environment
+  }
+}
+
+resource "aws_route" "rtr1" {
+  route_table_id         = aws_route_table.rt1.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.igw1.id
+}
+
+resource "aws_route_table_association" "snet1-rt1" {
+  subnet_id      = aws_subnet.snet1.id
+  route_table_id = aws_route_table.rt1.id
+}
