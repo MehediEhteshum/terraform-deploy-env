@@ -28,5 +28,11 @@ variable "local-os" {
 variable "location" {
   type        = string
   description = "Type the location for the deployment: e.g. East US"
-  default     = "East US"
+  # default     = "East US"
+}
+
+variable "location-aws" {
+  type        = string
+  description = "Type the location for the deployment: e.g. us-east-1"
+  # default     = "us-east-1"
 }
