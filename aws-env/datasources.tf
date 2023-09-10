@@ -10,5 +10,4 @@ data "aws_ami" "vm1-ami" {
 
 data "aws_instance" "vm1-data" {
   instance_id = aws_instance.vm1.id
-  public_ip   = aws_instance.vm1.public_ip
 }
