@@ -25,8 +25,16 @@ variable "local-os" {
   }
 }
 
-variable "location" {
+# override default from CLI: -var="location-azure=West US"
+variable "location-azure" {
   type        = string
   description = "Type the location for the deployment: e.g. East US"
   default     = "East US"
+}
+
+# override default from CLI: -var="location-aws=us-west-1"
+variable "location-aws" {
+  type        = string
+  description = "Type the location for the deployment: e.g. us-east-1"
+  default     = "us-east-1"
 }

@@ -4,8 +4,8 @@ data "azurerm_resource_group" "rg" {
   name = "your-rg-name"
 }
 
-data "azurerm_public_ip" "pubip1-data" {
-  name = azurerm_public_ip.pubip1.name
+data "azurerm_virtual_machine" "vm1-data" {
+  name = azurerm_linux_virtual_machine.vm1.name
   #   resource_group_name = azurerm_resource_group.rg.name
   resource_group_name = data.azurerm_resource_group.rg.name
 }
