@@ -1,3 +1,3 @@
-output "public_ip_address" {
-  value = aws_instance.vm1.public_ip
+output "public-ip-address" {
+  value = "${data.aws_instance.vm1-data.id}: ${data.aws_instance.vm1-data.public_ip}"
 }

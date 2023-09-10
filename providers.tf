@@ -5,7 +5,7 @@ provider "azurerm" {
 
 # AWS provider
 provider "aws" {
-  region                  = var.location-aws
-  shared_credentials_file = "~/.aws/credentials"
-  profile                 = "vscode"
+  region                   = var.location-aws
+  shared_credentials_files = ["~/.aws/credentials"]
+  profile                  = "vscode"
 }

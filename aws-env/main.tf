@@ -88,7 +88,7 @@ resource "aws_instance" "vm1" {
   # provisioner changes are not captured in terraform state
   provisioner "local-exec" {
     command = templatefile("${var.local-os}-ssh-script.tpl", {
-      hostname     = self.public_ip_address,
+      hostname     = self.public_ip,
       user         = "ubuntu",
       identityfile = "~/.ssh/id_rsa"
     })
