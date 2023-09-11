@@ -11,21 +11,30 @@ resource "google_compute_subnetwork" "snet1" {
   network       = google_compute_network.vnet1.id
 }
 
-resource "google_compute_firewall" "firewall1" {
-  name    = "firewall1"
+resource "google_compute_firewall" "fw1" {
+  name    = "fw1"
   network = google_compute_network.vnet1.self_link
 
   allow {
     protocol = "all"
+    ports    = ["0-65535"]
   }
 
   source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["fw1"]
+}
+
+resource "google_compute_address" "pubip1" {
+  name        = "pubip1"
+  description = "Static public IP"
 }
 
 resource "google_compute_instance" "vm1" {
   name         = "vm1"
   machine_type = "e2-medium"
   zone         = "${var.location}-a"
+  tags         = ["fw1"]
+
   boot_disk {
     initialize_params {
       image = "ubuntu-1804-lts"
@@ -35,6 +44,9 @@ resource "google_compute_instance" "vm1" {
   network_interface {
     network    = google_compute_network.vnet1.self_link
     subnetwork = google_compute_subnetwork.snet1.self_link
+    access_config {
+      nat_ip = google_compute_address.pubip1.address
+    }
   }
 
   metadata_startup_script = file("./customdata.tpl")
