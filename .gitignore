@@ -2,6 +2,9 @@
 *.pem
 .vscode
 
+# secrets
+*secrets*
+
 # Local .terraform directories
 **/.terraform/*
 

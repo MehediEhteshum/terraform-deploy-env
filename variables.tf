@@ -1,8 +1,8 @@
 variable "cloud-provider" {
   type        = string
-  description = "Type the cloud service provider for the deployment: [azure, aws]"
+  description = "Type the cloud service provider for the deployment: [azure, aws, gcp]"
   validation {
-    condition     = contains(["azure", "aws"], var.cloud-provider)
+    condition     = contains(["azure", "aws", "gcp"], var.cloud-provider)
     error_message = "Valid value is one of the following: azure, aws."
   }
 }
@@ -38,3 +38,14 @@ variable "location-aws" {
   description = "Type the location for the deployment: e.g. us-east-1"
   default     = "us-east-1"
 }
+
+# override default from CLI: -var="location-gcp=us-west1"
+variable "location-gcp" {
+  type        = string
+  description = "Type the location for the deployment: e.g. us-east1"
+  default     = "us-east1"
+}
+
+variable "projectid-gcp" {}
+
+variable "keyfilepath-gcp" {}
