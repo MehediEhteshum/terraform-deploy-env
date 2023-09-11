@@ -51,6 +51,19 @@ resource "google_compute_instance" "vm1" {
 
   metadata_startup_script = file("./customdata.tpl")
 
+  # usage of provisioner is a last resort or
+  # can be used for simple non-destructive tasks
+  # not recommended for complex operations
+  # provisioner changes are not captured in terraform state
+  provisioner "local-exec" {
+    command = templatefile("${var.local-os}-ssh-script.tpl", {
+      hostname     = self.network_interface.0.access_config.0.nat_ip,
+      user         = "adminuser",
+      identityfile = "~/.ssh/id_rsa"
+    })
+    interpreter = var.local-os == "windows" ? ["Powershell", "-Command"] : ["bash", "-c"]
+  }
+
   labels = {
     environment = var.environment
   }
