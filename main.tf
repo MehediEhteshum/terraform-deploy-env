@@ -27,3 +27,11 @@ module "aws-env" {
   environment = var.environment
   local-os    = var.local-os
 }
+
+module "gcp-env" {
+  count       = var.cloud-provider == "gcp" ? 1 : 0
+  source      = "./gcp-env"
+  location    = var.location-gcp
+  environment = var.environment
+  local-os    = var.local-os
+}
