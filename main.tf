@@ -6,6 +6,9 @@ terraform {
     aws = {
       source = "hashicorp/aws"
     }
+    google = {
+      source = "hashicorp/google"
+    }
   }
 }
 
@@ -21,6 +24,14 @@ module "aws-env" {
   count       = var.cloud-provider == "aws" ? 1 : 0
   source      = "./aws-env"
   location    = var.location-aws
+  environment = var.environment
+  local-os    = var.local-os
+}
+
+module "gcp-env" {
+  count       = var.cloud-provider == "gcp" ? 1 : 0
+  source      = "./gcp-env"
+  location    = var.location-gcp
   environment = var.environment
   local-os    = var.local-os
 }
