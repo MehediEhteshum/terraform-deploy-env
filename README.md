@@ -28,3 +28,17 @@ This covers -
 ![Plan](https://github.com/MehediEhteshum/terraform-deploy-env/blob/main/azure-env/screenshots/3%20terraform%20plan.png)
 ![Plan passed](https://github.com/MehediEhteshum/terraform-deploy-env/blob/main/azure-env/screenshots/5%20terraform%20plan.png)
 - Once the plan passes, run `terraform apply` command to deploy or make the changes. This will also capture the latest state of the cloud environment in the `terraform.tfstate` file. For future 'terraform apply' operations, it will store the past state as a backup in the `terraform.tfstate.backup` file. If the operation succeeds, it will deploy the resources or make required changes to the cloud environment. In case of Azure, we will see a similar successful deployment shown in the picture in the 'Introduction' section.
+- Once the depoyment is done, we can get the public IP address of the VM and can SSH connect to it.<br><br>
+![SSH1](https://github.com/MehediEhteshum/terraform-deploy-env/blob/main/azure-env/screenshots/7%20ssh%20connect%20cmd.png)
+![SSH2](https://github.com/MehediEhteshum/terraform-deploy-env/blob/main/azure-env/screenshots/8%20ssh%20connect%20cmd.png)
+- Since the local OS specific script adds the host to the SSH config file during the deployment, we can connect to the VM using `Remote-SSH` tool in the VS Code as shown in the picture. It will open a new terminal with VM connected.<br><br>
+![Remote_SSH1](https://github.com/MehediEhteshum/terraform-deploy-env/blob/main/azure-env/screenshots/9%20ssh%20connect%20tool.png)
+![Remote_SSH2](https://github.com/MehediEhteshum/terraform-deploy-env/blob/main/azure-env/screenshots/10%20ssh%20connect%20tool.png)
+- When connected to the VM, we can check that the custom data script has successfully installed docker in the VM during the deployment.<br><br>
+![Custom data](https://github.com/MehediEhteshum/terraform-deploy-env/blob/main/azure-env/screenshots/11%20custom%20data%20installed.png)
+- We can run `terraform output` command to see the outputs that we set in the project. Here, it shows the public IP of the deployed VM. Terraform datasource feature is used to dynamically update the VM IP address on the output.<br><br>
+![Output](https://github.com/MehediEhteshum/terraform-deploy-env/blob/main/azure-env/screenshots/12%20terraform%20output.png)
+- We can run `terraform destroy` command to destroy all the deployed resources at once. It can be helpful to quickly destroy dev resources. We can also recover destroyed resources from `terraform.tfstate.backup` file.<br><br>
+![Destroy](https://github.com/MehediEhteshum/terraform-deploy-env/blob/main/azure-env/screenshots/14%20after%20terraform%20destroy.png)
+
+
